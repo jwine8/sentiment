@@ -1,0 +1,100 @@
+{% extends "index.html" %}
+
+{% block result %}
+
+
+
+<div class="result-card my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0" style="color:maroon">{{ forecast_title }}</h6>
+    <div class="media text-muted pt-3">
+        <div class="media-body pb-3 mb-0 small lh-125 " style="padding-bottom: 0 !important;">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <table class="table table-sm table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"style="text-align:left">Date</th>
+                            <th scope="col" style="text-align:center">Forecast</th>
+                            <th scope="col" style="text-align:center">Sent. Adj.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for key, value in prediction.items() %}
+                      {% for k, v in value.items() %}
+                      {% set item = values_list[loop.index-1] %}
+                      <tr>
+                        <td style="text-align:left">{{ k }}</td>
+                        <td style="text-align:center">{{ "%.2f"|format(v) }}</td>
+                        <td style="text-align:center">{{ item }}</td>
+                      </tr>
+                    
+                      {% endfor %}
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+  {% endblock %}
+
+{% block graph1 %}
+<div class="chart-container result-card my-3 p-3 bg-white rounded box-shadow" style="position: relative; width: 100%; height: 370px;">
+    <h6 class="border-bottom border-gray pb-2 mb-0" style="color:maroon">Visualization</h6>
+
+
+
+
+
+    <canvas id="chart" ></canvas>
+    <script>
+
+      // bar chart data
+      var barData = {
+        labels : [
+          {% for item in labels %}
+            "{{ item }}",
+          {% endfor %}
+        ],
+
+        datasets : [{
+          fillColor: "rgba(255,255,255,0.5)",
+          strokeColor: "rgba(151,187,205,1)",
+          pointColor: "rgba(151,187,205,1)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          bezierCurve : false,
+          data : [
+	    {% for item in values %}
+              {{ item }},
+            {% endfor %}]
+          }
+	]
+      }
+      // get bar chart canvas
+      var mychart = document.getElementById("chart").getContext("2d");
+
+      steps = 10
+      max = {{ max }}
+      min = {{ min }}
+      // draw bar chart
+        var LineChartDemo = new Chart(mychart).Line(barData, {
+        //scaleOverride: true,
+        scaleSteps: steps,
+        scaleStepWidth: Math.ceil(max / steps),
+        scaleStartValue: min,
+        scaleShowVerticalLines: true,
+        scaleShowGridLines : true,
+        barShowStroke : true,
+        scaleShowLabels: true,
+        bezierCurve: false,
+      });
+ 
+    </script>
+
+
+
+
+
+</div>
+{% endblock %}

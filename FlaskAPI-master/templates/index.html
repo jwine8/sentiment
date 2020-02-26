@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="header-text d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+    <div class="lh-100">
+        <h3 class="display-4 mb-0 text-white lh-100">Google Stock Forecast</h3>
+        <h6 class="display-6" style="color:navajowhite;">Revature Machine Learning Batch - Group Project</h6>
+    </div>
+</div>
+<div class="entry-form" style="height: 100px">
+    <div class="content">
+        <div class="media text-muted pt-3">
+
+            <div class="signup-form" id="inputInterval">
+                <form action="/" method="POST">
+                    <div class="form-group d-flex">
+                        <h5 style="padding-right: 10px; margin: auto; color: maroon;">Set forecast interval:</h5>
+                        <input type="number" id="weekly-weekly_interval" class="form-control" name="Weekly-predict" value="7" min="1" max="30" aria-required="true" aria-invalid="false" style="width: 100px; text-align:center;">
+                        <button type="submit" class="btn btn-warning">Get Forecast</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <!--<div class="signup-form" id="inputDate">
+                <form action="/result" method="POST">
+                    <div class="form-group d-flex">
+                        <h5 style="padding-right: 10px; margin: auto; color: rgb(255, 193, 7);">$ 1,500.00</h5>
+                        <input type="date" class="form-control" name="Date-predict" required style="width: 150px; text-align:center;">
+                        <button type="submit" class="btn btn-info">Forecast by Date</button>
+                    </div>
+                </form>
+            </div>-->
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-container" style="margin: auto 50px">
+    <div class="row">
+        <div class="col col-lg-4 col-md-12">
+            {% block result %}{% endblock %}
+        </div>
+
+        <div class="col col-lg-8 col-md-12">
+                {% block graph1 %} {% endblock %}
+        </div>
+    </div>
+</div>
+
+
+
+
+       
+{% endblock %}
